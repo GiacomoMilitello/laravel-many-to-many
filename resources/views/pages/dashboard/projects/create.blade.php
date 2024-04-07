@@ -33,6 +33,26 @@
             </div>
 
             <div class="mb-3">
+                <label for="technologies" class="form-label">Technologies</label>
+                <select
+                    multiple
+
+                    class="form-select form-select-lg"
+                    name="technologies[]"
+                    id="technologies"
+                >
+                    
+                    @forelse ($technologies as $item)
+                        <option value="{{ $item->id }}">
+                            {{ $item->name }}
+                        </option>
+                    @empty
+                    <option value="">Nessuna Technology</option>
+                    @endforelse
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="type_id" class="form-label">Types</label>
                 <select
                     class="

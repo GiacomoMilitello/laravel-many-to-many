@@ -45,6 +45,40 @@
             </div>
 
             <div class="mb-3">
+                <label for="technologies" class="form-label">Technologies</label>
+                <select
+                    multiple
+
+                    class="form-select form-select-lg"
+                    name="technologies[]"
+                    id="technologies"
+                >
+                    
+                    @forelse ($technologies as $item)
+
+                        @if ( $errors->any() )
+                            <option value="{{ $item->id }}"
+                                {{ in_array($item->id, old('technologies', [] )) ? 'selected' : '' }}
+                            >
+                                {{ $item->name }}
+                            </option>
+
+                            @else
+
+                                <option value="{{ $item->id }}"
+                                    {{ $project->technologies->contains( $item->id) ? 'selected' : '' }}
+                                >
+                                    {{ $item->name }}
+                                </option>
+
+                        @endif
+                    @empty
+                    <option value="">Nessuna Technology</option>
+                    @endforelse
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="type_id" class="form-label">Types</label>
                 <select
                     class="

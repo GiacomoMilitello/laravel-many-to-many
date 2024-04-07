@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Type;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -25,8 +26,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('pages.dashboard.projects.create', compact('types'));
+        return view('pages.dashboard.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -60,8 +62,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('pages.dashboard.projects.edit', compact('project', 'types'));
+        return view('pages.dashboard.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
