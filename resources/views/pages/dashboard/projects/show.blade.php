@@ -12,6 +12,18 @@
 
         <p>
             <strong>
+                @if($project->technologies->isNotEmpty())
+                    @foreach($project->technologies as $technology)
+                        {{ $technology->name }}
+                    @endforeach
+                @else
+                    Nessuna Technology
+                @endif
+            </strong>
+        </p>
+
+        <p>
+            <strong>
                 {{ $project->type ? $project->type->name : 'nessun Type' }}
             </strong>
         </p>

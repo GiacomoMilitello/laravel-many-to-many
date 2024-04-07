@@ -39,12 +39,19 @@ class ProjectController extends Controller
         $val_data = $request->validated();
         $slug = Project::generateSlug( $request->title );
         $val_data['slug'] = $slug;
+
         if($request->hasFile('cover_image')){
             $path = Storage::disk('public')->put('project_images', $request->cover_image);
 
             $val_data['cover_image'] = $path;
         }
+
         $new_project = Project::create( $val_data );
+
+        if( $request->has('technologies') ){
+            $new_project->technologies()->attach( $request->technologies );
+        }
+
         return redirect()->route('dashboard.projects.index');
     }
 
@@ -87,6 +94,11 @@ class ProjectController extends Controller
         }
 
         $project->update($val_data);
+
+        if( $request->has('technologies') ){
+            $project->technologies()->sync( $request->technologies );
+        }
+
         return redirect()->route('dashboard.projects.index');
     }
 
@@ -95,6 +107,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+
+        $project->technologies()->sync([]);
+
         if( $project->cover_image ){
             Storage::delete($project->cover_image);
         }
